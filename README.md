@@ -54,7 +54,7 @@ This tutorial was done using Windows 10, there should be no problems using anoth
 [basic_examples]:https://docs.pycom.io/tutorials/basic/rgbled/
 
 ## :hammer: Putting everything together
-
+![](https://i.ibb.co/jWDVBJ7/wiring.jpg)
 ## :anchor: Platform
 
 ## :mag_right: The code
