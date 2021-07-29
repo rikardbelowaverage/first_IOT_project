@@ -3,7 +3,7 @@
 ###### Tags: `Weather Station, IoT, LNU, LoPy4, Pycom`
 
 - Table of Content
-[ToC]
+
 
 ## :memo: Summarized project overview
 
@@ -11,7 +11,7 @@ This project describes how to easily create a sensor that monitors the air quali
 
 Tutorial describes how to create an IoT package which measures humidity and temperature at given location. Project includes basic programming, wiring and data transportation setup. An approximation for completing project would be 3 hours, some variance depending on previous experience and pre-installed programs.
 
-## :page_with_curl: Why this project
+## :bulb: Why this project
 There are a couple of reasons for why this became the chosen project, recently the home-thermometer broke. With this summers hot temperatures and no temperature measurement it became the obvious choice. Main purpose of project was learning basics of IoT : how data goes from measured to visualized.
 Future plans involves installation of CO2 and air pressure sensors, which would give the weather station possibility to monitor:
 - Temperature
@@ -23,18 +23,23 @@ Future plans involves installation of CO2 and air pressure sensors, which would 
 
 | Material            | Where to buy            |
 | -----------------   |:----------------------- |
-|LoPy4 and sensors bundle, 949:- | [:link:][Electrokit_LoPy]|
-|Battery LiPo 3.7V 4400mAh, 249:- | [:link:][Electrokit_Battery]|
-|Choose one below|
-|Sensor kit – 25 modules, 299:- | [:link:][Electrokit_Sensors]
-|Digital temperature and humidity sensor DHT11, 49:- |[:link:][Electrokit_DHT]
-
+|LoPy4 and sensors bundle, 949:- | [:link:][Electrokit_LoPy] |
+|Battery LiPo 3.7V 4400mAh, 249:- | [:link:][Electrokit_Battery] |
+|Sensor kit – 25 modules, 299:- | [:link:][Electrokit_Sensors] |
+|Digital temperature and humidity sensor DHT11, 49:- | [:link:][Electrokit_DHT] |
 [Electrokit_LoPy]:https://www.electrokit.com/produkt/lnu-1dt305-tillampad-iot-lopy4-and-sensors-bundle/
 [Electrokit_Sensors]:https://www.electrokit.com/produkt/sensor-kit-26-moduler/
 [Electrokit_DHT]:https://www.electrokit.com/en/product/digital-temperature-and-humidity-sensor-dht11/
 [Electrokit_Battery]:https://www.electrokit.com/produkt/batteri-lipo-3-7v-4400mah/
 
+
+
+*Note : prices are from 29/07-2021
 LoPy4 board with its ease of use of LoRaWAN makes it a good choice for this type of project.
 
 ## :computer: Computer setup
+__Note:__ For complete code, please look into python files in repository.
+This tutorial was done using Windows 10, there should be no problems using another operating system. However, the procedures may differ.
+
+### Steps:
 
