@@ -20,17 +20,18 @@ Future plans involves installation of CO2 and air pressure sensors, which would 
 
 | Material            | Purchase here           |
 | -----------------   |:----------------------- |
-|LoPy4 and sensors bundle, 949:- | [:credit_card:][Electrokit_LoPy] |
+|LoPy4 Basic Bundle, 849:- | [:credit_card:][Electrokit_LoPy] |
 |Battery LiPo 3.7V 4400mAh, 249:- | [:credit_card:][Electrokit_Battery] |
 |Sensor kit – 25 modules, 299:- | [:credit_card:][Electrokit_Sensors] |
 |Digital temperature and humidity sensor DHT11, 49:- | [:credit_card:][Electrokit_DHT] |
 
-[Electrokit_LoPy]: https://www.electrokit.com/produkt/lnu-1dt305-tillampad-iot-lopy4-and-sensors-bundle/
+[Electrokit_LoPy]: https://www.electrokit.com/produkt/lnu-1dt305-tillampad-iot-lopy4-basic-bundle/
 [Electrokit_Sensors]: https://www.electrokit.com/produkt/sensor-kit-26-moduler/
 [Electrokit_DHT]: https://www.electrokit.com/en/product/digital-temperature-and-humidity-sensor-dht11/
 [Electrokit_Battery]: https://www.electrokit.com/produkt/batteri-lipo-3-7v-4400mah/
 
-*Note : prices are from 29/07-2021
+*Note : prices are from 29/07-2021*
+
 LoPy4 board with its ease of use of LoRaWAN makes it a good choice for this type of project.
 
 ## :computer: Computer setup
@@ -58,9 +59,73 @@ This tutorial was done using Windows 10, there should be no problems using anoth
 ## :anchor: Platform
 
 ## :mag_right: The code
-As mentioned earlier complete code is available in repository. 
+As mentioned earlier complete code is available in repository, complete code also includes comments and explanation.
+
+- Code:
+```python
+import time
+import socket
+import machine
+import pycom
+import struct
+from machine import Pin
+from dht import DHT
+
+s = socket.socket(socket.AF_LORA, socket.SOCK_RAW)
+s.setsockopt(socket.SOL_LORA, socket.SO_DR, 5)
+s.setblocking(False)
+
+th = DHT(Pin('P23', mode=Pin.OPEN_DRAIN), 0)
+time.sleep(2)
+
+while(True):
+    result = th.read()
+    
+    while not result.is_valid():
+        time.sleep(.5)
+        result = th.read()
+        
+    temperature = result.temperature
+    humidity = result.humidity
+    
+    payload = struct.pack('>hB', int(temperature * 100), int(humidity))
+    s.send(payload)
+    
+    pycom.rgbled(0x00ff00)
+    time.sleep(1)
+    pycom.heartbeat(False)
+    
+    ms_to_minutes = 1000*60
+    snooze_timer = 15
+    lora.nvram_save()
+    machine.deepsleep(ms_to_minutes*snooze_timer)
+
+```
 
 ## :helicopter: Transmitting the data / connectivity
+In the code example data is transmitted from the sensor once every 10th minute. However, to manage battery-longevity versus resolution set the interval to appropriate value.
+Measurement data is transmitted using LoRa, reason for not using e.g. Wi-Fi is to maximize lifetime of the battery and increasing range of where device can be used. This was done in Gothenburg, where [Helium][helium_map] and [The Things Network][ttn_map] coverage is available. During the start of the project TTN was used, there were reliability with the connectivity for TTN, therefore Heliums LoRaWAN network was used instead.
+Helium provides a starting credit of 10,000 data credits which would be equivalent to transmitting 240.000 bytes through their network.
+Data is recieved in Helium console then forwarded to Ubidots and Datacake using built in HTTP-integrations, the data package also referred to as payload is decoded in both applications. To increase the number of variables that would be transferred one must update the payload decoder, below are examples of how different [data structures][data_structures] can be decoded:
+```python
+decoded_payload['temperature'] = (bytes[0] << 24 >> 16 | bytes[1]) / 100
+decoded_payload['humidity'] = (bytes[2])
+#decoded_payload['pressure'] = (bytes[3])
+``` 
+Data from code is packaged accordingly :
+```python
+    temperature = XX
+    humidity = XX
+    payload = struct.pack('>hB', int(temperature * 100), int(humidity))
+    s.send(payload)
+```
+
+
+[helium_map]:https://explorer.helium.com/hotspots/hex/881f250699fffff
+[ttn_map]:https://www.thethingsnetwork.org/map
+[data_structures]:https://docs.python.org/3/library/struct.html
+
+
 
 ## Presenting the data
 
