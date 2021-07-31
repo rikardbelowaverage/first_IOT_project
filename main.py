@@ -30,10 +30,13 @@ while(True):
 
     print('sent temperature:', temperature)
     print('sent humidity:', humidity)
-
-    pycom.rgbled(0x00ff00) # Led-indication on board that data has been sent
-    time.sleep(1) #How long time you want the led to be active
-    pycom.heartbeat(False) # Turns of the led
+    
+    #LED-indication that data has been sent
+    pycom.rgbled(0x00ff00) 
+    #How long time LED should be active
+    time.sleep(1)
+    #Turns off LED
+    pycom.heartbeat(False) 
 
     ms_to_minutes = 1000*60
     snooze_timer = 15
