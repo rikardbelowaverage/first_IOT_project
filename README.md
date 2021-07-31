@@ -190,7 +190,8 @@ To generate graphs below, just decide what variables from the device that should
 ## Finalizing the design
 This project is a very good introduction to the IoT-world. The parts are quite cheap, so if any mistakes with wiring a new sensor costs 49:-. This LoPy will remain as a weather-station until I've purchased a new thermometer. If it will remain a weather-station I will probably include CO2, pressure and light measurements.
 The DHT11 sensor is extremly cheap, however since there is not too much temperature variance going with the DHT22 with better resolution would give more interesting graphs.
-This could also be done reading the temperature from another sensor, this would affect the energy consumption. 
+This could also be done reading the temperature from another sensor, this would affect the energy consumption.
+The inverse relation-ship between humidity and temperature was quite supprising of how often it was clearly visible in the graphs.
 
 ![](https://i.imgur.com/rDd5xk3.jpg)
 
