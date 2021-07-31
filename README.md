@@ -4,7 +4,7 @@
 
 ## :memo: Summarized Project Overview
 
-Tutorial describes how to create an IoT-device that measures humidity and temperature at given location. Project includes basic programming, wiring and data transportation setup. An approximation for completing project would be 3 hours, depending on previous experience and how many programs are pre-installed on used PC.
+Tutorial describes how to create an IoT-device that measures humidity and temperature at given location. Project includes basic programming, wiring and data transportation. An approximation for completing project would be 3 hours, depending on previous experience and how many programs are pre-installed on used PC.
 
 ## :bulb: Why This Project
 There are a couple of reasons for why this became the chosen project, recently the home-thermometer broke. With this hot summer one must have some temperature measurement. Main purpose of project was learning basics of IoT : how data goes from measured to visualized, how LoPy/Arduino-type boards interact with sensors, energy consumption and data transfer costs.
@@ -78,6 +78,8 @@ The DHT11 sensor contains a humidity sensing component and one temperature senso
 ![](https://i.ibb.co/jWDVBJ7/wiring.jpg)
 
 The DHT sensor requires 3.3V so there is no need to use any resistors when powered by the LoPy. This project did not use any casing, for production one could consider [IP-classed casing][pycase] depending on what environment the IoT-device would be placed in.
+
+[pycase]:https://pycom.io/product/universal-ip67-case/
 
 | __DHT sensor__            | Conditions         | Minimum | Typical | Maximum |
 | -----------------   |:---------------  |:-------------  |:-------------- |:--------------- |
@@ -194,5 +196,3 @@ This could also be done reading the temperature from another sensor, this would 
 The inverse relation-ship between humidity and temperature was quite supprising of how often it was clearly visible in the graphs.
 
 ![](https://i.imgur.com/rDd5xk3.jpg)
-
-
