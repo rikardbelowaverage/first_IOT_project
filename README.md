@@ -4,7 +4,7 @@
 
 ## :memo: Summarized Project Overview
 
-Tutorial describes how to create an IoT package which measures humidity and temperature at given location. Project includes basic programming, wiring and data transportation setup. An approximation for completing project would be 3 hours, depending on previous experience and pre-installed programs.
+Tutorial describes how to create an IoT-device that measures humidity and temperature at given location. Project includes basic programming, wiring and data transportation setup. An approximation for completing project would be 3 hours, depending on previous experience and how many programs are pre-installed on used PC.
 
 ## :bulb: Why This Project
 There are a couple of reasons for why this became the chosen project, recently the home-thermometer broke. With this hot summer one must have some temperature measurement. Main purpose of project was learning basics of IoT : how data goes from measured to visualized, how LoPy/Arduino-type boards interact with sensors, energy consumption and data transfer costs.
@@ -31,8 +31,18 @@ Future plans involves installation of CO2 and air pressure sensors, which would 
 
 *Note : Pick Sensor kit for more optionalities or DHT sensor for pricing, prices are from 29/07-2021*
 
+| __DHT sensor__            | Specifications         |
+| -----------------   |:----------------------- |
+|Operating Voltage | 3.3V to 5.5V |
+|Humidity range	 | 20% to 90% RH | 
+|Humidity accuracy |	±5% RH |
+|Humidity resolution |	1% RH |
+|Temperature range |	0ºC to 50ºC [32ºF to 122ºF] |
+|Temperature accuracy |	±2ºC |
+|Temperature resolution | 1ºC |
 
-LoPy4 board with its ease of use of LoRaWAN makes it a good choice for this type of project.
+LoPy4 board with its ease of use of LoRaWAN makes it a good choice for this type of project. For this project everything was purchased as a bundle from a previous student, the bundle included 25 sensor-kit and the LoPy4.
+
 
 ## :computer: Computer Setup
 __Note:__ For complete code, please look into python files in repository.
@@ -46,7 +56,7 @@ This tutorial was done using Windows 10, there should be no problems using anoth
 5. For working with the LoPy board use one of the following IDE's : [Atom][atom_link] or [Visual Studio Code][vsc_link]. Start the IDE when done with the installation, then install the pymakr plug-in. __Note__: [node.js][nodejs_link] is mandatory for running pymakr.
 6. Please make sure installation is correct by trying one of the following [basic examples][basic_examples] from pycom.
 7. As seen in basic examples from step 6, code is written in pymakr extension and then flashed to LoPy4 device.
-8. In the Pymakr plug-in there are four possibilities to interact with device on left hand side. From top to bottom they are : connecting / disconnect the communications port, run selected file, upload project to device and download from device.
+8. In the Pymakr plug-in there are five possibilities to interact with device on left hand side. From top to bottom they are : connecting or disconnect the communication port, run selected file, upload project to device and download from device. Not included in the picture is also a possibility to get device info.
 
 
 ![](https://i.imgur.com/SR4XOtX.png=100x100)
@@ -60,26 +70,34 @@ This tutorial was done using Windows 10, there should be no problems using anoth
 
 ## :hammer: Putting everything together
 In the earlier phase of the project there were several sensors connected, therefore it was easier using a breadbord.
-After going back and forward regarding power and data-consumption the only sensor used was the [DHT11-sensor][DHT_spec].
-The DHT11 sensor contains a humidity sensing component and one temperature sensor thermistor. For higher accuracy the [DHT22-sensor][] is a good option, the cost is about twice as high at approximate 100:- compared to the DHT11 at 49:-. 
+After going back and forward regarding power and data-consumption the only sensor used was the [DHT11-sensor][DHT11_spec].
+The DHT11 sensor contains a humidity sensing component and one temperature sensor thermistor. For higher accuracy the [DHT22-sensor][DHT22_spec] is a good option, the cost is about twice as high at approximate 100:- compared to the DHT11 at 49:-. 
 
-| __DHT sensor__            | Specifications         |
-| -----------------   |:----------------------- |
-|Operating Voltage | 3.3V to 5.5V |
-|Humidity range	 | 20% to 90% RH | 
-|Humidity accuracy |	±5% RH |
-|Humidity resolution |	1% RH |
-|Temperature range |	0ºC to 50ºC [32ºF to 122ºF] |
-|Temperature accuracy |	±2ºC |
-|Temperature resolution | 1ºC |
-
-[DHT_spec]:https://www.electrokit.com/uploads/productfile/41015/DHT11.pdf
+[DHT11_spec]:https://www.electrokit.com/uploads/productfile/41015/DHT11.pdf
+[DHT22_spec]:https://www.sparkfun.com/datasheets/Sensors/Temperature/DHT22.pdf
 ![](https://i.ibb.co/jWDVBJ7/wiring.jpg)
 
-The DHT sensor requires 3.3V so there is no need to use any resistors when powered by the LoPy. This project did not use any casing, for production one could consider [IP-classed casing][pycase] depending on what environment the IoT-device would be placed in. 
+The DHT sensor requires 3.3V so there is no need to use any resistors when powered by the LoPy. This project did not use any casing, for production one could consider [IP-classed casing][pycase] depending on what environment the IoT-device would be placed in.
 
-[pycase]:https://pycom.io/product/universal-ip67-case/
+| __DHT sensor__            | Conditions         | Minimum | Typical | Maximum |
+| -----------------   |:---------------  |:-------------  |:-------------- |:--------------- |
+| Power Supply    | DC         | 3V | 5V | 5.5V |
+| Current Supply  | Measuring  | 0.5mA |  | 2.5mA |
+|                 | Average    | 0.2mA |  | 1mA |
+|                 | Standby | 100uA |  | 150uA |
+| Sampling period | Second     | 1 |  |  |
 
+*Note: Sampling period at intervals should be no less than 1 second.*
+
+For this project, measurement is done four times per hour.
+Measuring cost : 3.3V × 2.5mA = 0.00825 watts while measuring.
+Standby cost : 3.3V × 150uA = 0.000495 watts while sleeping.
+
+To be on the safe side, calculation is done as 1/60 of an hour is measuring while 59/60 time is spent sleeping.
+Average cost would be 0.00825×(1/60) + 0.000495×(59/60) = 0,0001375 + 0,00048675 = 0,00062425 watts.
+Please note how important sleep is for maximizing the battery-life.
+For a battery with 4400mAh and 3.7V output calculation as :
+4400mAh × 3.7V = 8.1 Wh -> 8.1Wh / 0,00062425W = 12 976 hours -> approx 1,5 years battery life-time.
 
 ## :anchor: Platform
 Prior to choosing platform three different platforms were tried : Datacake, Pybytes and Ubidots. Due to the simplicity vizualising the data Ubidots was chosen as the platform to proceed with. Ubidots is a cloud-based, user-friendly platform that is suitable for these types of project. An alternative could be running a [TIG-stack][tig].
