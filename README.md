@@ -158,7 +158,7 @@ while(True):
 In the code example data is transmitted from the sensor once every 10th minute. However, to manage battery-longevity versus resolution set the interval to appropriate value.
 Measurement data is transmitted using LoRa, reason for not using e.g. Wi-Fi is to maximize lifetime of the battery and increasing range of where device can be used. This was done in Gothenburg, where [Helium][helium_map] and [The Things Network][ttn_map] coverage is available. During the start of the project TTN was used, there were reliability with the connectivity for TTN, therefore Heliums LoRaWAN network was used instead.
 Helium provides a starting credit of 10,000 data credits which would be equivalent to transmitting 240.000 bytes through their network.
-Data is recieved in Helium console then forwarded to Ubidots and Datacake using built in HTTP-integrations, the data package also referred to as payload is decoded in both applications. To increase the number of variables that would be transferred one must update the payload decoder, below are examples of how different [data structures][data_structures] can be decoded:
+Data is recieved in Helium console then forwarded to Ubidots and Datacake using built in HTTP and Webhook integration, the data package also referred to as payload is decoded in both applications. To increase the number of variables that would be transferred one must update the payload decoder, below are examples of how different [data structures][data_structures] can be decoded:
 ```python
 decoded_payload['temperature'] = (bytes[0] << 24 >> 16 | bytes[1]) / 100
 decoded_payload['humidity'] = (bytes[2])
